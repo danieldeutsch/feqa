@@ -14,7 +14,7 @@ def main(args):
             documents.append(instance['document'])
             summaries.append(instance['summary'])
 
-    scorer = FEQA(use_gpu=True)
+    scorer = FEQA(use_gpu=True, batch_size=args.batch_size)
     scores = scorer.compute_score(documents, summaries, aggregate=False)
 
     dirname = os.path.dirname(args.output_jsonl)
@@ -29,5 +29,6 @@ if __name__ == '__main__':
     argp = argparse.ArgumentParser()
     argp.add_argument('input_jsonl')
     argp.add_argument('output_jsonl')
+    argp.add_argument('batch_size', type=int)
     args = argp.parse_args()
     main(args)

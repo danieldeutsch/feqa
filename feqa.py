@@ -18,7 +18,8 @@ from collections import defaultdict, Counter
 
 
 class FEQA(object):
-    def __init__(self, squad_dir='./qa_models/squad1.0', bart_qa_dir='./bart_qg/checkpoints/', use_gpu=False):
+    def __init__(self, squad_dir='./qa_models/squad1.0', bart_qa_dir='./bart_qg/checkpoints/', use_gpu=False,
+                 batch_size: int = 64):
         self.qg_model = BARTModel.from_pretrained(
             bart_qa_dir,
             checkpoint_file = 'checkpoint_best.pt'
@@ -29,7 +30,7 @@ class FEQA(object):
             self.qg_model.half()
         self.qg_model.eval()
 
-        self.batch_size = 64
+        self.batch_size = batch_size
         self.beam_size = 10
         self.max_length = 100
 
